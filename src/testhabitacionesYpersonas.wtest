@@ -1,0 +1,36 @@
+import habitaciones.*
+import personas.*
+
+describe "Test de habitaciones y familia"{
+	/*Habitaciones creadas para test */
+	const banio1 = new Banio()
+	const dormitorio1 = new HabitacionDeDormitorio(cantidadDePersonasQueDuermenEnElDormitorio = 2)
+	const cocina1 = new Cocina(metrosCuadradosDeLaCocina = 10)
+	
+	/*personas creadas para test */
+	
+	const persona1 = new Persona(duermeEnElDormitorio = dormitorio1, edad = 20, nivelDeConfort = 30, habitacionPrevia = dormitorio1, habitacionNueva = cocina1)
+	const persona2 = new Persona(duermeEnElDormitorio = dormitorio1, edad = 3, nivelDeConfort = 25, habitacionPrevia = dormitorio1, habitacionNueva = cocina1)
+	
+	test "Saber los puntos de confort que ofrece el baño a la persona1 y persona2"{
+		assert.equals(14, banio1.nivelDeConfortQueOfreceA(persona1))
+		assert.equals(12, banio1.nivelDeConfortQueOfreceA(persona2))
+	}
+	test "Configurar el porcentaje utilizado en el cálculo de los puntos de confort de las cocinas"{
+		persona1.tieneHabilidadEnCocina(true)
+		assert.equals(11, cocina1.nivelDeConfortQueOfreceA(persona1))
+		
+		configurarValorDeCocina.porcentajeDeConfortDeCocina(0.5)
+		
+		assert.equals(15, cocina1.nivelDeConfortQueOfreceA(persona1))
+	}
+	test "Comprobando que persona1 puede entrar en cocina1"{
+		assert.that(cocina1.puedeEntrar(persona1))
+	}
+	test "cantidad de ocupantes en la cocina, no se puede agregar a persona2 porque es un niño pequeño y no tiene habilidades de cocina"{
+		cocina1.agregarOcupante(persona1)
+		cocina1.agregarOcupante(persona2)
+		
+		assert.equals(1, cocina1.cantidadDeOcupantes())
+	}
+}
